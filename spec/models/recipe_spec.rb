@@ -13,7 +13,7 @@ RSpec.describe Recipe, type: :model do
       description: "A classic Italian pasta dish with creamy sauce.",
       ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
       instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
-      user_id: User.find_by(username: "user1").id,
+      user_id: user.id,
       public: true
     )
     expect(recipe.errors[:recipe_name]).to include("can't be blank")
@@ -24,7 +24,7 @@ RSpec.describe Recipe, type: :model do
       recipe_name: "Spaghetti Carbonara",
       ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
       instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
-      user_id: User.find_by(username: "user1").id,
+      user_id: user.id,
       public: true
     )
     expect(recipe.errors[:description]).to include("can't be blank")
@@ -35,7 +35,7 @@ RSpec.describe Recipe, type: :model do
       recipe_name: "Spaghetti Carbonara",
       description: "A classic Italian pasta dish with creamy sauce.",
       instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
-      user_id: User.find_by(username: "user1").id,
+      user_id: user.id,
       public: true
     )
     expect(recipe.errors[:ingredients]).to include("can't be blank")
@@ -46,14 +46,14 @@ RSpec.describe Recipe, type: :model do
       recipe_name: "Spaghetti Carbonara",
       description: "A classic Italian pasta dish with creamy sauce.",
       ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
-      user_id: User.find_by(username: "user1").id,
+      user_id: user.id,
       public: true
     )
     expect(recipe.errors[:instructions]).to include("can't be blank")
   end
 
   it 'should validate user_id' do
-    recipe = user.recipes.create(
+    recipe = Recipe.create(
       recipe_name: "Spaghetti Carbonara",
       description: "A classic Italian pasta dish with creamy sauce.",
       ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
@@ -69,7 +69,7 @@ RSpec.describe Recipe, type: :model do
       description: "A classic Italian pasta dish with creamy sauce.",
       ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
       instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
-      user_id: User.find_by(username: "user1").id,
+      user_id: user.id,
     )
     expect(recipe.errors[:public]).to include("can't be blank")
   end
