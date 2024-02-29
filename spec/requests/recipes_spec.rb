@@ -148,9 +148,21 @@ RSpec.describe "Recipes", type: :request do
     end
   end
 
-  
+  describe "DELETE /destroy" do
+    it "deletes a recipe" do
+      recipe = Recipe.create(
+        recipe_name: "Spaghetti Carbonara",
+        description: "A classic Italian pasta dish with creamy sauce.",
+        ingredients: "Spaghetti, Eggs, Pancetta, Parmesan, Cheese, Black Pepper",
+        instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
+        public: true,
+        user_id: user.id
+      )
 
+      delete "/recipes/#{recipe.id}"
 
-
-
+      expect(response).to have_http_status(:no_content)
+      expect(Recipe.find_by(id: recipe.id)).to be_nil
+    end
+  end
 end
