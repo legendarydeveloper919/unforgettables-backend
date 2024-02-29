@@ -46,7 +46,6 @@ RSpec.describe Recipe, type: :model do
       recipe_name: "Spaghetti Carbonara",
       description: "A classic Italian pasta dish with creamy sauce.",
       ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
-      user_id: user.id,
       public: true
     )
     expect(recipe.errors[:instructions]).to include("can't be blank")
