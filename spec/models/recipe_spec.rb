@@ -22,7 +22,7 @@ RSpec.describe Recipe, type: :model do
   it 'should validate description' do
     recipe = user.recipes.create(
       recipe_name: "Spaghetti Carbonara",
-      ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
+      ingredients: "Spaghetti, Eggs, Pancetta, Parmesan Cheese, Black Pepper",
       instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
       user_id: user.id,
       public: true
@@ -45,7 +45,7 @@ RSpec.describe Recipe, type: :model do
     recipe = user.recipes.create(
       recipe_name: "Spaghetti Carbonara",
       description: "A classic Italian pasta dish with creamy sauce.",
-      ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
+      ingredients: "Spaghetti, Eggs, Pancetta, Parmesan Cheese, Black Pepper",
       public: true
     )
     expect(recipe.errors[:instructions]).to include("can't be blank")
@@ -55,7 +55,7 @@ RSpec.describe Recipe, type: :model do
     recipe = Recipe.create(
       recipe_name: "Spaghetti Carbonara",
       description: "A classic Italian pasta dish with creamy sauce.",
-      ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
+      ingredients: "Spaghetti, Eggs, Pancetta, Parmesan Cheese, Black Pepper",
       instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
       public: true
     )
@@ -66,7 +66,7 @@ RSpec.describe Recipe, type: :model do
     recipe = user.recipes.create(
       recipe_name: "Spaghetti Carbonara",
       description: "A classic Italian pasta dish with creamy sauce.",
-      ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
+      ingredients: "Spaghetti, Eggs, Pancetta, Parmesan Cheese, Black Pepper",
       instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
       user_id: user.id,
     )
