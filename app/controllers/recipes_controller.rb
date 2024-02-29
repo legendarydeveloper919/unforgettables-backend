@@ -19,7 +19,7 @@ class RecipesController < ApplicationController
     if recipe.valid?
       render json: recipe
     else 
-      render json: recipe.errors
+      render json: recipe.errors, status: 422
     end
   end
 

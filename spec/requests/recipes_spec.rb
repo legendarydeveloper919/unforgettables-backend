@@ -13,7 +13,7 @@ RSpec.describe "Recipes", type: :request do
       recipe = user.recipes.create(
         recipe_name: "Spaghetti Carbonara",
         description: "A classic Italian pasta dish with creamy sauce.",
-        ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
+        ingredients: "Spaghetti, Eggs, Pancetta, Parmesan Cheese, Black Pepper",
         instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
         public: true
       )
@@ -23,7 +23,7 @@ RSpec.describe "Recipes", type: :request do
       expect(response).to have_http_status(200)
       expect(recipe.first['recipe_name']).to eq("Spaghetti Carbonara")
       expect(recipe.first['description']).to eq("A classic Italian pasta dish with creamy sauce.")
-      expect(JSON.parse(recipe.first['ingredients'])).to eq(["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"])
+      expect(recipe.first['ingredients']).to eq("Spaghetti, Eggs, Pancetta, Parmesan Cheese, Black Pepper")
       expect(recipe.first['instructions']).to eq("Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.")
       expect(recipe.first['public']).to eq(true)
     end
@@ -74,27 +74,83 @@ RSpec.describe "Recipes", type: :request do
 
   describe "PUT /update" do
     it "updates a recipe" do
-      recipe = user.recipes.create(
+      recipe_params = {
+        recipe: {
         recipe_name: "Spaghetti Carbonara",
         description: "A classic Italian pasta dish with creamy sauce.",
-        ingredients: ["Spaghetti", "Eggs", "Pancetta", "Parmesan Cheese", "Black Pepper"],
+        ingredients: "Spaghetti Eggs, Pancetta, Parmesan Cheese, Black Pepper",
         instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
-        public: true
-      )
-      recipe_params =  {
+        public: true,
+        user_id:  user.id
+    }
+  }
+    post "/recipes", params: recipe_params
+    recipe=Recipe.last
+    p recipe
+      updated_recipe_params =  {
         recipe: {
           recipe_name: "Spaghetti",
-          description: "A classic Italian pasta dish with creamy sauce.",
-          ingredients: "Spaghetti, Eggs, Pancetta, Parmesan, Cheese, Black Pepper",
-          instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
-          public: true,
-          user_id: user.id
+          
+          ingredients: "Spaghetti",
+          instructions: "Cook spaghetti.",
+          
+          
         }
       }
-      put "/recipes/#{recipe.id}", params: recipe_params, as: :json
-        recipe=Recipe.first
+       patch "/recipes/#{recipe.id}", params: updated_recipe_params
+
+
+        
+
         expect(response).to have_http_status(200)
-        expect(recipe.recipe_name).to eq "Spaghetti"
+
+        updated_recipe = Recipe.find(recipe.id)
+        p updated_recipe
+
+        expect(updated_recipe.recipe_name).to eq "Spaghetti"
+        
+        expect(updated_recipe.ingredients).to eq "Spaghetti"
+        expect(updated_recipe.instructions).to eq "Cook spaghetti."
+        
+
+    end
+    it 'returns a 422 status code' do
+      recipe_params = {
+        recipe: {
+          recipe_name: "Spaghetti Carbonara",
+          description: "A classic Italian pasta dish with creamy sauce.",
+          ingredients: "Spaghetti Eggs, Pancetta, Parmesan Cheese, Black Pepper",
+          instructions: "Cook spaghetti according to package instructions. In a separate pan, cook pancetta until crispy. In a bowl, whisk eggs, grated Parmesan cheese, and black pepper. Once spaghetti is cooked, drain and add to the pan with pancetta. Turn off heat, add egg mixture, and toss until coated and creamy. Serve immediately.",
+          public: true,
+          user_id:  user.id
+        }
+      }
+
+      post "/recipes", params: recipe_params
+      recipe=Recipe.last
+      p recipe
+        invalid_recipe_params =  {
+          recipe: {
+            recipe_name: nil,
+            
+            ingredients: nil,
+            instructions: nil,
+            
+            
+          }
+        }
+
+      recipe = Recipe.last
+      patch "/recipes/#{recipe.id}", params: invalid_recipe_params
+
+      expect(response).to have_http_status(422)
+      
     end
   end
+
+  
+
+
+
+
 end
