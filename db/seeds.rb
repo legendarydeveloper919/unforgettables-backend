@@ -24,7 +24,7 @@ user1_recipes = [
     ingredients: "Bread, Avocado, Lemon Juice, Salt, Red Pepper Flakes",
     instructions: "Toast bread until golden brown. Mash avocado with lemon juice and salt. Spread avocado mixture on toast. Sprinkle with red pepper flakes. Enjoy!",
     
-    public: false
+    public: true
   }
 ]
 
