@@ -2,7 +2,7 @@ user1 = User.where(email: "test1@example.com").first_or_create(password: "passwo
 user2 = User.where(email: "test2@example.com").first_or_create(password: "password", password_confirmation: "password")
 
 
-recipes = [
+user1_recipes = [
   {
     recipe_name: "Spaghetti Carbonara",
     description: "A classic Italian pasta dish with creamy sauce.",
@@ -24,11 +24,11 @@ recipes = [
     ingredients: "Bread, Avocado, Lemon Juice, Salt, Red Pepper Flakes",
     instructions: "Toast bread until golden brown. Mash avocado with lemon juice and salt. Spread avocado mixture on toast. Sprinkle with red pepper flakes. Enjoy!",
     
-    public: false
+    public: true
   }
 ]
 
-recipes.each do |recipe|
+user1_recipes.each do |recipe|
   user1.recipes.create(recipe)
   puts "Creating recipe: #{recipe[:recipe_name]}"
 end

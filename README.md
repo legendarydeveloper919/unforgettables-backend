@@ -141,3 +141,11 @@ as well as within app/controllers/users/sessions_controller.rb:
 - Deployment instructions
 
 - ...
+
+
+# How to change data types in rails
+`  class ChangeUserIdToInteger < ActiveRecord::Migration[7.1]
+    def change
+      change_column :recipes, :user_id, :integer, using: 'user_id::integer'
+    end
+  end`
