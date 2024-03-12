@@ -7,6 +7,7 @@ class Recipe < ApplicationRecord
 
 
 
+
   validates_associated :user
 
   
