@@ -79,6 +79,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
   database: unforget_backend_production
   username: unforget_backend
   password: <%= ENV["UNFORGET_BACKEND_DATABASE_PASSWORD"] %>
